@@ -4,6 +4,7 @@ package
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
+	import flash.geom.Point;
 	/**
 	 * ...
 	 * @author Erwin Henraat
@@ -11,7 +12,7 @@ package
 	public class Main extends Sprite 
 	{
 		private var myTank:Tank;
-		private var dPressed:Boolean = false;
+		public static var input:Point = new Point();
 		
 		public function Main():void 
 		{
@@ -38,25 +39,40 @@ package
 		}		
 		
 		private function loop(e:Event):void
-		{
-			if (dPressed == true)
-			{
-				myTank.x += 5;
-			}
+		{			
+			myTank.update();
+			
 		}
 		private function onKeyUp(e:KeyboardEvent):void 
 		{
-			if (e.keyCode == Keyboard.D)
+			if (e.keyCode == Keyboard.D || e.keyCode == Keyboard.A )
 			{
-				dPressed = false;
+				input.x = 0;
 			}
+			if ( e.keyCode == Keyboard.S || e.keyCode == Keyboard.W)
+			{
+				input.y = 0;
+			}
+			
 		}
 		private function onKeyDown(e:KeyboardEvent):void
 		{
-	
+			
 			if (e.keyCode == Keyboard.D)
 			{
-				dPressed = true;				
+				input.x = 1;
+			}
+			if (e.keyCode == Keyboard.A)
+			{
+				input.x = -1;
+			}
+			if (e.keyCode == Keyboard.S)
+			{
+				input.y = -1;
+			}
+			if (e.keyCode == Keyboard.W)
+			{
+				input.y = 1;
 			}
 		}
 		
