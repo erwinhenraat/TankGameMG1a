@@ -1,6 +1,8 @@
 package  
 {
 	import flash.display.MovieClip;
+	import flash.events.MouseEvent;
+	import flash.events.Event;
 	/**
 	 * ...
 	 * @author Erwin Henraat
@@ -9,15 +11,28 @@ package
 	{
 		private var myTankBody:TankBodyArt;
 		private var myTankTurret:TankTurretArt;
+		public var turretRotation:Number;
 		
 		public function Tank() 
 		{
+			this.addEventListener(Event.ADDED_TO_STAGE, init);
+			
 			
 			myTankBody = new TankBodyArt();			//instantieren van de class
 			this.addChild(myTankBody);
 			
 			myTankTurret = new TankTurretArt();
-			this.addChild(myTankTurret);
+			this.addChild(myTankTurret);	
+			
+		}		
+		private function init(e:Event):void
+		{
+			stage.addEventListener(MouseEvent.CLICK, onClick);
+		}
+		private function onClick(e:MouseEvent):void
+		{
+			trace("ik schiet omdat ik click!");
+			dispatchEvent(new Event("SHOOT"));
 			
 		}
 		public function update():void
@@ -34,6 +49,7 @@ package
 			var r:Number = Math.atan2(dy, dx);
 			var degrees:Number = r * 180 / Math.PI;
 			myTankTurret.rotation = degrees;
+			turretRotation = degrees;
 		}
 		private function rotateBody():void
 		{
